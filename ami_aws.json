@@ -1,27 +1,27 @@
 {
     "variables": {
         "aws_access_key": "{{env `AWS_ACCESS_KEY_ID`}}",
-        "aws_secret_key": "{{env `AWS_SECRET_ACCESS_KEY`}}",
-        "region":         "eu-west-1"
+        "aws_secret_key": "{{env `AWS_SECRET_ACCESS_KEY`}}"
     },
     "builders": [
         {
             "access_key": "{{user `aws_access_key`}}",
             "ami_name": "packer-linux-aws-demo-{{timestamp}}",
-            "instance_type": "t2.micro",
+            "instance_type": "m3.medium",
             "region": "eu-west-1",
             "secret_key": "{{user `aws_secret_key`}}",
-            "source_ami_filter": {
-              "filters": {
-              "virtualization-type": "hvm",
-              "name": "ubuntu/images/*ubuntu-xenial-16.04-amd64-server-*",
-              "root-device-type": "ebs"
-              },
-              "owners": ["099720109477"],
-              "most_recent": true
-            },
+            "source_ami" : "ami-844e0bf7",
             "ssh_username": "ubuntu",
-            "type": "amazon-ebs"
+            "type": "amazon-ebs",
+            "associate_public_ip_address": "true",
+            "launch_block_device_mappings": [
+            {
+              "device_name": "/dev/sda1",
+              "volume_size": 40,
+              "volume_type": "gp2",
+              "delete_on_termination": true
+            }
+            ]
         }
     ],
     "provisioners": [
