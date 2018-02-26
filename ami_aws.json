@@ -2,13 +2,14 @@
     "variables": {
         "aws_access_key": "{{env `AWS_ACCESS_KEY_ID`}}",
         "aws_secret_key": "{{env `AWS_SECRET_ACCESS_KEY`}}"
+        "region": "{{env `REGION`}}"
     },
     "builders": [
         {
             "access_key": "{{user `aws_access_key`}}",
             "ami_name": "packer-linux-aws-demo-{{timestamp}}",
             "instance_type": "m3.medium",
-            "region": "eu-west-1",
+            "region": "{{user `region`}}",
             "secret_key": "{{user `aws_secret_key`}}",
             "source_ami" : "ami-844e0bf7",
             "ssh_username": "ubuntu",
